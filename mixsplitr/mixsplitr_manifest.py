@@ -17,7 +17,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Optional, Dict, List, Any
 
-from mixsplitr_core import CURRENT_VERSION, get_app_data_dir
+from .mixsplitr_core import CURRENT_VERSION, get_app_data_dir
 
 # Maximum file size for SHA-256 hashing (2 GB)
 _HASH_SIZE_LIMIT = 2 * 1024 * 1024 * 1024
@@ -26,7 +26,7 @@ _HASH_SIZE_LIMIT = 2 * 1024 * 1024 * 1024
 def get_manifest_dir():
     """Get directory for manifest files, respecting user config if set."""
     try:
-        from mixsplitr_core import get_manifest_directory
+        from .mixsplitr_core import get_manifest_directory
         return Path(get_manifest_directory())
     except Exception:
         pass
@@ -415,7 +415,7 @@ def reorganize_from_manifest(manifest, dry_run=True):
             cleaned   – list of empty folders that were (or would be) removed
     """
     import shutil
-    from mixsplitr_tagging import normalize_artist, _maybe_normalize
+    from .mixsplitr_tagging import normalize_artist, _maybe_normalize
 
     _UNSAFE = str.maketrans('', '', '<>:"/\\|?*')
 
@@ -511,7 +511,7 @@ def reorganize_from_manifest(manifest, dry_run=True):
 
                 # Update embedded tags to match new artist/title
                 try:
-                    from mixsplitr_tagging import retag_file
+                    from .mixsplitr_tagging import retag_file
                     retag_file(new_path, new_artist, new_title)
                 except Exception as e:
                     results["errors"].append(f"Tags not updated for {new_filename}: {e}")

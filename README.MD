@@ -2,7 +2,9 @@
 <img width="1052" height="457" alt="Image" src="https://github.com/user-attachments/assets/31535288-9a6c-472a-bbb7-2791e350f19b" />
 
 # MixSplitR v7.1
-### Mix Archival Tool by KJD
+### Mix Archival Tool
+
+Original project by chefkjd (KJD).
 
 
 MixSplitR helps you record and organize digitized vinyl, CD, and mixes into a clean music library with split tracks, metadata, artwork, and structured folders.
@@ -24,6 +26,21 @@ It supports:
 
 ---
 # [Download](https://github.com/chefkjd/MixSplitR/releases)
+
+
+## Project Structure
+
+- `mixsplitr/` - main Python package (all application modules)
+- `MixSplitR.py` - compatibility launcher entrypoint
+- `pyproject.toml` - package metadata and `mixsplitr` console script
+- `packaging/` - PyInstaller spec and packaging assets
+- `docs/` - architecture notes and module map
+- `docs/development-guide.md` - local setup and development workflow
+
+Run from source with one of:
+
+- `python MixSplitR.py`
+- `python -m mixsplitr`
 
 
 
@@ -211,8 +228,6 @@ Default music output path:
 
 ---
 
-## [Did I save you some time? Help me fund my large caffeine intake!](https://ko-fi.com/mixsplitr)
-
 ## Privacy and Intended Use
 
 - For personal, non-commercial use only
@@ -230,5 +245,3 @@ Default music output path:
 - ACRCloud: <https://console.acrcloud.com>
 - AcoustID: <https://acoustid.org/api-key>
 - Last.fm API: <https://www.last.fm/api/account/create>
-
-

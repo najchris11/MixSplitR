@@ -71,7 +71,7 @@ except ImportError:
 # IMPORT MODULES
 # =============================================================================
 
-from mixsplitr_core import (
+from .mixsplitr_core import (
     CURRENT_VERSION, GITLAB_REPO, Style,
     AUDIO_EXTENSIONS_GLOB, AUDIO_EXTENSIONS,
     check_for_updates, RateLimiter, resource_path,
@@ -86,19 +86,19 @@ from mixsplitr_core import (
     ffmpeg_split_file, ffmpeg_extract_chunk_for_identification
 )
 
-from mixsplitr_manifest import (
+from .mixsplitr_manifest import (
     list_manifests, load_manifest, compare_manifests,
     export_manifest_for_session, rollback_from_manifest, get_manifest_dir
 )
 
-from mixsplitr_metadata import (
+from .mixsplitr_metadata import (
     find_art_in_json, get_backup_art, get_all_external_metadata,
     set_lastfm_key
 )
 
-from mixsplitr_audio import detect_bpm_librosa
+from .mixsplitr_audio import detect_bpm_librosa
 
-from mixsplitr_identify import (
+from .mixsplitr_identify import (
     identify_with_acoustid, identify_with_shazam, get_enhanced_metadata,
     merge_identification_results, batch_download_artwork,
     is_acoustid_available, is_shazam_available, setup_musicbrainz, identify_dual_mode,
@@ -106,42 +106,42 @@ from mixsplitr_identify import (
     check_chromaprint_available, is_trace_enabled, print_id_winner
 )
 
-from mixsplitr_tagging import embed_and_sort_flac, embed_and_sort_alac, embed_and_sort_generic, AUDIO_FORMATS
+from .mixsplitr_tagging import embed_and_sort_flac, embed_and_sort_alac, embed_and_sort_generic, AUDIO_FORMATS
 
-from mixsplitr_memory import (
+from .mixsplitr_memory import (
     scan_existing_library, get_available_ram_gb, create_file_batches,
     is_psutil_available
 )
 
-from mixsplitr_editor import (
+from .mixsplitr_editor import (
     save_preview_cache, load_preview_cache, interactive_editor,
     display_preview_table
 )
 
 # New prompt_toolkit based menus
-from mixsplitr_menus import (
+from .mixsplitr_menus import (
     show_main_menu, show_api_keys_menu, show_mode_switch_menu,
     show_preview_type_menu, show_split_mode_menu,
     show_post_process_menu, show_manifest_menu, show_format_selection_menu,
     show_file_selection_menu, show_exit_menu_with_cache
 )
-from mixsplitr_menu import (
+from .mixsplitr_menu import (
     confirm_dialog, input_dialog, wait_for_enter, clear_screen as menu_clear_screen,
     PROMPT_TOOLKIT_AVAILABLE
 )
 
 # Split-out modules (v7.1 refactor)
-from mixsplitr_processing import (
+from .mixsplitr_processing import (
     process_single_track,
     process_single_track_manual,
     process_single_track_mb_only,
     process_single_track_dual
 )
-from mixsplitr_pipeline import (
+from .mixsplitr_pipeline import (
     process_large_file_streaming,
     apply_from_cache
 )
-from mixsplitr_session import manage_manifests
+from .mixsplitr_session import manage_manifests
 
 # Setup ffmpeg paths and configure pydub
 # FIXED: Properly get the returned paths from setup_ffmpeg()
@@ -182,7 +182,7 @@ if not PSUTIL_AVAILABLE:
 # Visual splitter UI - optional module
 SPLITTER_UI_AVAILABLE = False
 try:
-    from splitter_ui import get_split_points_visual, split_audio_at_points
+    from .splitter_ui import get_split_points_visual, split_audio_at_points
     SPLITTER_UI_AVAILABLE = True
 except ImportError:
     pass
@@ -261,11 +261,10 @@ def _ensure_windows_console_host(cols: int, lines: int):
     try:
         args = subprocess.list2cmdline(sys.argv[1:])
         if getattr(sys, "frozen", False):
-            target = f"\"{sys.executable}\""
+            run_cmd = f"\"{sys.executable}\" {args}".strip()
         else:
-            target = f"\"{sys.executable}\" \"{os.path.abspath(__file__)}\""
-
-        run_cmd = f"{target} {args}".strip()
+            # Package layout uses relative imports, so relaunch via module mode.
+            run_cmd = f"\"{sys.executable}\" -m mixsplitr {args}".strip()
         inner = (
             f"set MIXSPLITR_CONHOST=1 && "
             f"mode con cols={int(cols)} lines={int(lines)} >nul 2>&1 && "
@@ -791,7 +790,7 @@ def _handle_load_files_choice(state: AppState) -> None:
 
         if sys.platform in ("win32", "darwin") and user_input.lower() == "r":
             try:
-                from mixsplitr_record import record_system_audio_interactive
+                from .mixsplitr_record import record_system_audio_interactive
             except Exception:
                 print("\n  Recording mode requires: pip install soundcard soundfile\n")
                 input("Press Enter to continue...")
@@ -995,7 +994,7 @@ def _handle_main_menu_utility_choice(choice: str, state: AppState, cache_path: s
 
     if choice == "record" and sys.platform in ("win32", "darwin"):
         try:
-            from mixsplitr_record import record_system_audio_interactive
+            from .mixsplitr_record import record_system_audio_interactive
         except Exception:
             print(f"\n  {Style.RED}❌ Recording mode not available{Style.RESET}")
             print(f"  Install dependencies: pip install soundcard soundfile\n")
@@ -1490,7 +1489,7 @@ def main():
                     else:
                         base_dir = exe_dir
                 else:
-                    base_dir = os.path.dirname(os.path.abspath(__file__))
+                    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
             else:
                 # Non-portable startup mode avoids scanning the local download/app folder.
                 base_dir = os.path.expanduser('~/Music')

@@ -87,7 +87,6 @@ AUDIO_EXTENSIONS = ['.wav', '.flac', '.mp3', '.m4a', '.ogg', '.aac', '.wma', '.a
 CURRENT_VERSION = "7.1"
 GITLAB_REPO = "chefkjd/MixSplitR"  # GitLab project path
 GITHUB_REPO = "chefkjd/MixSplitR"
-KOFI_URL = "https://ko-fi.com/mixsplitr"
 
 # ---------------------------------------------------------------------------
 # Identification-mode helpers
@@ -902,31 +901,21 @@ def _print_close_screen_branding():
 
     print(f"{Style.GRAY}{divider.center(cols)}{Style.RESET}")
     print(f"{Style.GRAY}{'Mix Archival Tool'.center(cols)}{Style.RESET}")
-    print(f"{Style.GRAY}{'By KJD'.center(cols)}{Style.RESET}")
+    print(f"{Style.GRAY}{'Original project by chefkjd (KJD)'.center(cols)}{Style.RESET}")
     print(f"{Style.GRAY}{divider.center(cols)}{Style.RESET}")
     print()
-    print(f"{Style.DIM}{'Always open source and free.'.center(cols)}{Style.RESET}")
-
-    message = "Although, if I saved you some time, consider buying me a coffee/beer?"
-    print(f"{Style.DIM}{message.center(cols)}{Style.RESET}")
-    link_label = _format_terminal_link(KOFI_URL.center(cols), KOFI_URL)
-    print(f"{red}{link_label}{Style.RESET}")
+    print(f"{Style.DIM}{'Open-source project maintained from the original MixSplitR repo.'.center(cols)}{Style.RESET}")
     print()
 
 
 def _show_close_screen_prompt_toolkit() -> bool:
-    """
-    Show branded close screen with clickable ko-fi URL.
-    Returns True if the prompt_toolkit screen was shown and handled.
-    """
+    """Show branded close screen with project credit."""
     try:
-        import webbrowser
         from prompt_toolkit import Application
         from prompt_toolkit.key_binding import KeyBindings
         from prompt_toolkit.layout import Layout, Window, FormattedTextControl
         from prompt_toolkit.formatted_text import FormattedText
         from prompt_toolkit.styles import Style as PTStyle
-        from prompt_toolkit.mouse_events import MouseEventType
     except Exception:
         return False
 
@@ -947,15 +936,6 @@ def _show_close_screen_prompt_toolkit() -> bool:
     ]
     divider = "═══════════════════════════════════════"
 
-    def _open_kofi(mouse_event=None):
-        if mouse_event is not None:
-            if mouse_event.event_type != MouseEventType.MOUSE_UP:
-                return
-        try:
-            webbrowser.open(KOFI_URL, new=2)
-        except Exception:
-            pass
-
     def _line_pad(text: str) -> str:
         return " " * max(0, (cols - len(text)) // 2)
 
@@ -973,10 +953,7 @@ def _show_close_screen_prompt_toolkit() -> bool:
     lines.append(("class:logo_dim", f"{'Mix Archival Tool'.center(cols)}\n"))
     lines.append(("class:logo_dim", f"{'By KJD'.center(cols)}\n"))
     lines.append(("class:logo_dim", f"{divider.center(cols)}\n\n"))
-    lines.append(("class:body", f"{'Always open source and free.'.center(cols)}\n"))
-
-    lines.append(("class:body", f"{'Although, if I saved you some time, consider buying me a coffee/beer?'.center(cols)}\n"))
-    lines.append(("class:link", f"{KOFI_URL.center(cols)}\n", _open_kofi))
+    lines.append(("class:body", f"{'Open-source project maintained from the original MixSplitR repo.'.center(cols)}\n"))
     lines.append(("class:dim", "\n"))
     lines.append(("class:prompt", f"{'Press Enter to close...'.center(cols)}"))
 

@@ -394,7 +394,7 @@ def identify_with_shazam(audio_chunk):
 
         sample_seconds = 12
         try:
-            from mixsplitr_core import get_config  # Local import to avoid hard import cycles.
+            from .mixsplitr_core import get_config  # Local import to avoid hard import cycles.
             config = get_config() or {}
             sample_seconds = int(config.get('fingerprint_sample_seconds', 12))
         except Exception:

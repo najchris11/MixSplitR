@@ -96,7 +96,7 @@ def _append_featured(title, featured):
 def _maybe_normalize(artist, title):
     """Apply normalize_artist only if the config toggle is enabled."""
     try:
-        from mixsplitr_core import get_config
+        from .mixsplitr_core import get_config
         config = get_config()
         if config.get('normalize_artists', True):
             return normalize_artist(artist, title)

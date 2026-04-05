@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mixsplitr"
+version = "7.1.0"
+description = "Mix archival tool for recording, splitting, identifying, and organizing audio"
+readme = "README.MD"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+  { name = "KJD" }
+]
+
+[project.scripts]
+mixsplitr = "mixsplitr.cli:main"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["mixsplitr*"]

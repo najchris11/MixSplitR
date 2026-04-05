@@ -26,13 +26,13 @@ except ImportError:
 # LOCAL MODULE IMPORTS
 # =============================================================================
 
-from mixsplitr_core import get_config, Style
+from .mixsplitr_core import get_config, Style
 
-from mixsplitr_metadata import find_art_in_json, get_backup_art, get_all_external_metadata
+from .mixsplitr_metadata import find_art_in_json, get_backup_art, get_all_external_metadata
 
-from mixsplitr_audio import detect_bpm_librosa
+from .mixsplitr_audio import detect_bpm_librosa
 
-from mixsplitr_identify import (
+from .mixsplitr_identify import (
     identify_with_acoustid, identify_with_shazam, get_enhanced_metadata,
     merge_identification_results, is_shazam_available, is_trace_enabled,
     musicbrainz_search_recordings, print_id_winner

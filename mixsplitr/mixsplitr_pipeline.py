@@ -12,20 +12,20 @@ import base64
 from pydub import AudioSegment
 from pydub.silence import split_on_silence
 
-from mixsplitr_core import (
+from .mixsplitr_core import (
     Style, get_config, get_cache_path, get_audio_duration_fast,
     get_file_size_str, get_output_directory,
     ffmpeg_detect_silence, ffmpeg_get_split_points_from_silence,
     ffmpeg_split_file, ffmpeg_extract_chunk_for_identification
 )
-from mixsplitr_editor import load_preview_cache
-from mixsplitr_tagging import embed_and_sort_generic, AUDIO_FORMATS
-from mixsplitr_manifest import export_manifest_for_session
+from .mixsplitr_editor import load_preview_cache
+from .mixsplitr_tagging import embed_and_sort_generic, AUDIO_FORMATS
+from .mixsplitr_manifest import export_manifest_for_session
 
 # Visual splitter UI - optional module
 SPLITTER_UI_AVAILABLE = False
 try:
-    from splitter_ui import get_split_points_visual, split_audio_at_points
+    from .splitter_ui import get_split_points_visual, split_audio_at_points
     SPLITTER_UI_AVAILABLE = True
 except ImportError:
     pass

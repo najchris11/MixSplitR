@@ -16,8 +16,8 @@ import platform
 import subprocess
 import sys
 
-from mixsplitr_core import Style, get_config
-from mixsplitr_identify import (
+from .mixsplitr_core import Style, get_config
+from .mixsplitr_identify import (
     is_musicbrainz_available,
     musicbrainz_search_recordings,
     musicbrainz_search_releases,
@@ -25,12 +25,12 @@ from mixsplitr_identify import (
     group_recordings_by_album,
     get_enhanced_metadata,
 )
-from mixsplitr_tracklist import (
+from .mixsplitr_tracklist import (
     parse_tracklist,
     match_tracklist_to_tracks,
     format_tracklist_preview
 )
-from mixsplitr_menu import select_menu, MenuItem, MenuResult, confirm_dialog, input_dialog, wait_for_enter
+from .mixsplitr_menu import select_menu, MenuItem, MenuResult, confirm_dialog, input_dialog, wait_for_enter
 
 
 

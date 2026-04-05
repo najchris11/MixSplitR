@@ -13,13 +13,13 @@ import shlex
 import shutil
 from datetime import datetime
 
-from mixsplitr_core import Style, get_config, get_output_directory
-from mixsplitr_manifest import (
+from .mixsplitr_core import Style, get_config, get_output_directory
+from .mixsplitr_manifest import (
     list_manifests, load_manifest, compare_manifests,
     rollback_from_manifest, reorganize_from_manifest, get_manifest_dir, save_manifest
 )
-from mixsplitr_menus import show_manifest_menu
-from mixsplitr_menu import confirm_dialog
+from .mixsplitr_menus import show_manifest_menu
+from .mixsplitr_menu import confirm_dialog
 
 
 def _clear_screen():

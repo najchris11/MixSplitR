@@ -48,7 +48,7 @@ except ImportError:
 
 # Import existing Style class for consistency
 try:
-    from mixsplitr_core import Style
+    from .mixsplitr_core import Style
 except ImportError:
     class Style:
         RESET = '\033[0m'

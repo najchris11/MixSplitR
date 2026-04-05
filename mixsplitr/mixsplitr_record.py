@@ -22,7 +22,7 @@ from typing import Optional
 
 # Menu system (lazy import to avoid circular deps)
 try:
-    from mixsplitr_menu import MenuItem, select_menu
+    from .mixsplitr_menu import MenuItem, select_menu
     _MENU_AVAILABLE = True
 except ImportError:
     _MENU_AVAILABLE = False
@@ -57,7 +57,7 @@ except Exception:
 def _default_cache_dir() -> Path:
     """Get the recordings directory, respecting the user's config if set."""
     try:
-        from mixsplitr_core import get_recording_directory
+        from .mixsplitr_core import get_recording_directory
         d = Path(get_recording_directory())
         d.mkdir(parents=True, exist_ok=True)
         return d
@@ -186,7 +186,7 @@ def _save_recording_for_later(audio_path: Path) -> Optional[Path]:
 
     # Default save location — use configured recording folder if set
     try:
-        from mixsplitr_core import get_recording_directory
+        from .mixsplitr_core import get_recording_directory
         default_dir = Path(get_recording_directory())
     except Exception:
         if sys.platform in ("darwin", "win32"):

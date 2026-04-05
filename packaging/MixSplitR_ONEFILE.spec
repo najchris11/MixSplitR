@@ -253,7 +253,7 @@ a = Analysis(
     ],
     hookspath=[],
     hooksconfig={},
-    runtime_hooks=['rthook_ffmpeg.py'] if os.path.exists('rthook_ffmpeg.py') else [],
+    runtime_hooks=['mixsplitr/rthook_ffmpeg.py'] if os.path.exists('mixsplitr/rthook_ffmpeg.py') else [],
     excludes=[
         # Exclude unnecessary packages to reduce size
         'matplotlib',

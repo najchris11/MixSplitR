@@ -3,7 +3,7 @@ splitter_ui.py - Visual audio splitter with waveform UI
 A module for MixSplitR that provides browser-based split point selection
 
 Usage:
-    from splitter_ui import get_split_points_visual
+    from .splitter_ui import get_split_points_visual
     
     # Returns list of split points in seconds, or None if cancelled
     split_points = get_split_points_visual("/path/to/mix.wav")

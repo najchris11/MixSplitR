@@ -11,37 +11,36 @@ import shlex
 import webbrowser
 import shutil
 
-from mixsplitr_menu import (
+from .mixsplitr_menu import (
     MenuItem, MenuResult, select_menu, confirm_dialog,
     input_dialog, wait_for_enter, clear_screen, PROMPT_TOOLKIT_AVAILABLE
 )
 
-from mixsplitr_core import (
+from .mixsplitr_core import (
     Style, AUDIO_EXTENSIONS_GLOB, AUDIO_EXTENSIONS,
     get_config, save_config, get_config_path,
     MODE_ACRCLOUD, MODE_MB_ONLY, MODE_MANUAL, MODE_DUAL,
     validate_acrcloud_credentials
 )
 
-from mixsplitr_identify import (
+from .mixsplitr_identify import (
     is_shazam_available, setup_musicbrainz,
     set_acoustid_api_key, get_acoustid_api_key,
     check_chromaprint_available
 )
 
-from mixsplitr_metadata import set_lastfm_key
-from mixsplitr_tagging import AUDIO_FORMATS
+from .mixsplitr_metadata import set_lastfm_key
+from .mixsplitr_tagging import AUDIO_FORMATS
 
 # Try to import version info
 try:
-    from mixsplitr_core import CURRENT_VERSION, GITLAB_REPO
+    from .mixsplitr_core import CURRENT_VERSION, GITLAB_REPO
 except ImportError:
     CURRENT_VERSION = "7.1"
     GITLAB_REPO = ""
 
 ISSUES_URL = "https://github.com/chefkjd/MixSplitR/issues"
 PROJECT_URL = "https://github.com/chefkjd/MixSplitR"
-KOFI_URL = "https://ko-fi.com/mixsplitr"
 
 # Check ACRCloud availability
 try:
@@ -275,14 +274,6 @@ def _build_exit_menu_logo() -> tuple:
     mix_logo_color = Style.GRAY
     r_logo_color = '\033[38;5;196m'
 
-    def _open_kofi_page(mouse_event):
-        try:
-            from prompt_toolkit.mouse_events import MouseEventType
-            if mouse_event.event_type == MouseEventType.MOUSE_UP:
-                webbrowser.open(KOFI_URL, new=2)
-        except Exception:
-            pass
-
     header_lines = []
     for mix_part, split_part, r_part in logo_segments:
         header_lines.append(('class:logo_mix', mix_part))
@@ -291,9 +282,7 @@ def _build_exit_menu_logo() -> tuple:
     header_lines.append(('class:logo_accent', divider + '\n'))
     header_lines.append(('class:logo_accent', tagline + '\n'))
     header_lines.append(('class:logo_accent', divider + '\n'))
-    header_lines.append(('class:logo_dim', '    Always open source and free,\n'))
-    header_lines.append(('class:logo_dim', '    but if I saved you some time, consider buying me a coffee/beer?\n'))
-    header_lines.append(('class:link_red', f'    {KOFI_URL}\n', _open_kofi_page))
+    header_lines.append(('class:logo_dim', '    Open-source project maintained from the original MixSplitR repo.\n'))
 
     fb = ""
     for mix_part, split_part, r_part in logo_segments:
@@ -303,11 +292,7 @@ def _build_exit_menu_logo() -> tuple:
             f"{r_logo_color}{r_part}{Style.RESET}\n"
         )
     fb += f"{Style.GRAY}{divider}\n{tagline}\n{divider}{Style.RESET}\n"
-    fb += (
-        f"{Style.DIM}    Always open source and free,\n"
-        f"    but if I saved you some time, consider buying me a coffee/beer?\n"
-        f"\033[38;5;196m    {KOFI_URL}{Style.RESET}\n"
-    )
+    fb += f"{Style.DIM}    Open-source project maintained from the original MixSplitR repo.{Style.RESET}\n"
     return header_lines, fb
 
 
@@ -573,7 +558,7 @@ def show_api_keys_menu() -> bool:
 
 def _clear_preview_cache_from_settings():
     """Clear preview cache and known temporary chunk folders."""
-    from mixsplitr_core import get_cache_path
+    from .mixsplitr_core import get_cache_path
 
     cache_path = get_cache_path("mixsplitr_cache.json")
     readable_path = str(cache_path).replace('.json', '_readable.txt')
@@ -627,7 +612,7 @@ def _clear_preview_cache_from_settings():
 
 def _show_directory_settings_menu(config: dict):
     """Submenu for configuring output, recording, and manifest directories."""
-    from mixsplitr_core import get_app_data_dir
+    from .mixsplitr_core import get_app_data_dir
 
     default_app_data = str(get_app_data_dir() / "manifests")
 
@@ -680,7 +665,7 @@ def _change_directory_setting(config: dict, config_key: str,
                               label: str, description: str,
                               default_hint: str):
     """Prompt the user to change a directory setting, or reset to default."""
-    from mixsplitr_core import get_default_music_folder
+    from .mixsplitr_core import get_default_music_folder
 
     current = config.get(config_key, '')
     default_path = get_default_music_folder()
@@ -1092,7 +1077,7 @@ def _add_acoustid_key(config: dict):
 
 def _test_acoustid_key(config: dict):
     """Test AcoustID API key"""
-    from mixsplitr_identify import is_acoustid_available
+    from .mixsplitr_identify import is_acoustid_available
 
     print(f"\n  🔑 Testing AcoustID configuration...")
 
@@ -1329,7 +1314,7 @@ def show_file_selection_menu(current_dir: str) -> tuple:
     Returns (action, path_or_none)
     Actions: 'path', 'record', 'last_recording', 'cancel'
     """
-    from mixsplitr_core import get_config
+    from .mixsplitr_core import get_config
     _cfg = get_config()
     _deep = _cfg.get('deep_scan', False)
     _deep_label = "Deep Scan: ON (toggle in Settings)" if _deep else "Deep Scan: OFF (toggle in Settings)"
